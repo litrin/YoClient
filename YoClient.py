@@ -57,6 +57,6 @@ if __name__ == '__main__':
         status = conn.notice(username)
     else:
         status = conn.broadcast()
-    print conn.Error
+    
     if (status): exit(0)
     exit(1)
