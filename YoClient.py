@@ -30,7 +30,7 @@ class YoClient:
         }
 
         if self.link is not None:
-            param['link'] = link
+            param['link'] = self.link
 
         return self._action(self.NoticeAPI, param)
 
@@ -40,7 +40,7 @@ class YoClient:
         param = { 'api_token' : self.Token }
 
         if self.link is not None:
-            param['link'] = link
+            param['link'] = self.link
 
         return self._action(self.BroadcastAPI, param)
 
