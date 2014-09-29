@@ -45,7 +45,8 @@ class YoClient:
         return self._action(self.BroadcastAPI, param)
 
     def setLink(self, link):
-        self.link = link
+        if link is not None:
+            self.link = link
 
     def _action(self, API, param):
         param = urllib.urlencode(param)
@@ -74,7 +75,7 @@ if __name__ == '__main__':
         username = sys.argv[1]
         status = conn.notice(username, link)
     else:
-        status = conn.broadcast()
+        status = conn.broadcast(link)
 
     if (status): exit(0)
     exit(1)
