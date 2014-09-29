@@ -16,27 +16,43 @@ class YoClient:
     #Proxy        =  'PROXY-HOSTNAME:PORT'
     Proxy        = None
 
-    Token        = ''#Parse your token here
+    Token        = '' #Parse your token here
     Error        = None
 
-    def notice(self, username):
+    link         = None
+
+    def notice(self, username, link=None):
         username = username.upper()
+        self.setLink(link)
         param = {
             'username'  : username,
             'api_token' : self.Token,
         }
 
+        if self.link is not None:
+            param['link'] = link
+
         return self._action(self.NoticeAPI, param)
 
-    def broadcast(self):
+    def broadcast(self, link=None):
+        self.setLink(link)
+
         param = { 'api_token' : self.Token }
+
+        if self.link is not None:
+            param['link'] = link
+
         return self._action(self.BroadcastAPI, param)
+
+    def setLink(self, link):
+        self.link = link
 
     def _action(self, API, param):
         param = urllib.urlencode(param)
         if self.Proxy is not None:
             conn = httplib.HTTPConnection(self.Proxy)
             API = 'http://' + self.Host + API
+
         else:
             conn = httplib.HTTPConnection(host=self.Host, port=self.Port)
 
@@ -52,11 +68,13 @@ class YoClient:
 if __name__ == '__main__':
     import sys
     conn = YoClient()
+    conn.setLink('https://github.com/litrin/YoClient')
+
     if len(sys.argv) > 1:
         username = sys.argv[1]
         status = conn.notice(username)
     else:
         status = conn.broadcast()
-    print conn.Error
+
     if (status): exit(0)
     exit(1)
