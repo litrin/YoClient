@@ -68,11 +68,11 @@ class YoClient:
 if __name__ == '__main__':
     import sys
     conn = YoClient()
-    conn.setLink('https://github.com/litrin/YoClient')
+    link = 'https://github.com/litrin/YoClient'
 
     if len(sys.argv) > 1:
         username = sys.argv[1]
-        status = conn.notice(username)
+        status = conn.notice(username, link)
     else:
         status = conn.broadcast()
 
