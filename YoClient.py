@@ -66,9 +66,22 @@ class YoClient:
         conn.close()
         return status
 
+
+class IWantYo(YoClient):
+
+    _imageGenratorUrl = 'http://www.hetemeel.com/unclesamshow.php'
+
+    def setLink(self, text):
+        YoClient.setLink(self, self._genrateUrl(text))
+
+    def _genrateUrl(self, text):
+        return "%s?%s" % (self._imageGenratorUrl, urllib.urlencode({'text' : text}))
+
+    setText = setLink
+
 if __name__ == '__main__':
     import sys
-    conn = YoClient()
+    conn = IWantYo()
     link = 'https://github.com/litrin/YoClient'
 
     if len(sys.argv) > 1:
